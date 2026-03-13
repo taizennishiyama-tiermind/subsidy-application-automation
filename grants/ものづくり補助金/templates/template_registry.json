@@ -1,0 +1,53 @@
+{
+  "grant_name": "ものづくり補助金",
+  "templates": [
+    {
+      "filename": "【10-1・13-3-1共通 指定様式】地域別最低賃金引上げ要件確認書Ver1.2_20260225.xlsx",
+      "registered_at": "2026-03-12",
+      "fiscal_year": "2026年度",
+      "source": "チャット添付",
+      "gap_questions_answered": 6,
+      "cell_mapping_updated": true,
+      "template_skill_generated": true,
+      "note": "application_data.jsonの値を山田製作所データに更新済み（2026-03-13）"
+    },
+    {
+      "filename": "参考様式_事業計画書記載項目_23次締切_20260225.docx",
+      "registered_at": "2026-03-12",
+      "fiscal_year": "2026年度 / 第23次",
+      "source": "チャット添付",
+      "gap_questions_answered": 12,
+      "cell_mapping_updated": true,
+      "template_skill_generated": true,
+      "last_case": "山田製作所"
+    },
+    {
+      "filename": "様式５_資金調達に係る確認書_20250617.docx",
+      "registered_at": "2026-03-13",
+      "fiscal_year": "2026年度 / 第23次",
+      "source": "workspace/山田製作所/ から格納",
+      "gap_questions_answered": 0,
+      "cell_mapping_updated": false,
+      "template_skill_generated": true,
+      "note": "金融機関が記入する様式。AI自動書き込み対象外。メインバンクへの依頼書雛形作成に使用。"
+    }
+  ],
+  "history": [
+    {
+      "filename": "【10-1・13-3-1共通 指定様式】地域別最低賃金引上げ要件確認書Ver1.2_20260225.xlsx",
+      "registered_at": "2026-03-12",
+      "event": "registered"
+    },
+    {
+      "filename": "参考様式_事業計画書記載項目_23次締切_20260225.docx",
+      "registered_at": "2026-03-12",
+      "event": "registered"
+    },
+    {
+      "filename": "様式５_資金調達に係る確認書_20250617.docx",
+      "registered_at": "2026-03-13",
+      "event": "registered"
+    }
+  ],
+  "_note": "テンプレートファイルをこのフォルダに配置後、/add-template ものづくり補助金 を実行して登録してください"
+}

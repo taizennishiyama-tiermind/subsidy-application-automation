@@ -1,0 +1,70 @@
+{
+  "industries": {
+    "manufacturing": {
+      "name": "製造業",
+      "benchmarks": {
+        "equity_ratio": 0.4,
+        "current_ratio": 1.5,
+        "roa": 0.04,
+        "roe": 0.08,
+        "operating_profit_margin": 0.04,
+        "debt_repayment_years": 8.0
+      }
+    },
+    "wholesale": {
+      "name": "卸売業",
+      "benchmarks": {
+        "equity_ratio": 0.35,
+        "current_ratio": 1.3,
+        "roa": 0.03,
+        "roe": 0.07,
+        "operating_profit_margin": 0.02,
+        "debt_repayment_years": 10.0
+      }
+    },
+    "retail": {
+      "name": "小売業",
+      "benchmarks": {
+        "equity_ratio": 0.3,
+        "current_ratio": 1.2,
+        "roa": 0.03,
+        "roe": 0.08,
+        "operating_profit_margin": 0.03,
+        "debt_repayment_years": 9.0
+      }
+    },
+    "services": {
+      "name": "サービス業",
+      "benchmarks": {
+        "equity_ratio": 0.35,
+        "current_ratio": 1.4,
+        "roa": 0.04,
+        "roe": 0.1,
+        "operating_profit_margin": 0.07,
+        "debt_repayment_years": 7.0
+      }
+    },
+    "construction": {
+      "name": "建設業",
+      "benchmarks": {
+        "equity_ratio": 0.35,
+        "current_ratio": 1.25,
+        "roa": 0.03,
+        "roe": 0.07,
+        "operating_profit_margin": 0.03,
+        "debt_repayment_years": 10.0
+      }
+    },
+    "it": {
+      "name": "情報通信業",
+      "benchmarks": {
+        "equity_ratio": 0.45,
+        "current_ratio": 1.8,
+        "roa": 0.06,
+        "roe": 0.12,
+        "operating_profit_margin": 0.1,
+        "debt_repayment_years": 5.0
+      }
+    }
+  }
+}

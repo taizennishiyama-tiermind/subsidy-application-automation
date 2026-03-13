@@ -18,7 +18,12 @@ from pathlib import Path
 PROJECT_ROOT = Path(__file__).resolve().parents[3]
 sys.path.insert(0, str(PROJECT_ROOT / "scripts"))
 
-from utils.excel_handler import load_template, fill_cells, save_output, get_template_info
+from utils.excel_handler import fill_xlsx_safe, get_template_info, load_template
+from utils.template_mapping import (
+    build_sheet_cell_map,
+    summarize_resolution_report,
+    validate_resolution_report,
+)
 from utils.word_handler import (
     load_template as load_word_template,
     replace_placeholders,
@@ -53,6 +58,20 @@ WORD_PLACEHOLDER_MAPPING = {
 }
 
 
+def to_field_profile(cell_mapping: dict[str, dict[str, str]]) -> dict[str, dict[str, dict]]:
+    profile: dict[str, dict[str, dict]] = {}
+    for sheet_name, sheet_map in cell_mapping.items():
+        profile[sheet_name] = {}
+        for cell_ref, data_key in sheet_map.items():
+            field_name = f"{data_key}_{cell_ref.lower()}"
+            profile[sheet_name][field_name] = {
+                "data_key": data_key,
+                "targets": [cell_ref],
+                "required": False,
+            }
+    return profile
+
+
 def load_data(data_path: str) -> dict:
     path = Path(data_path)
     if not path.exists():
@@ -64,14 +83,11 @@ def load_data(data_path: str) -> dict:
 
 def fill_excel(template_path: str, data: dict, output_path: str):
     wb = load_template(template_path)
-    for sheet_name, cell_map in EXCEL_CELL_MAPPING.items():
-        if sheet_name not in wb.sheetnames:
-            print(f"警告: シート '{sheet_name}' が見つかりません。スキップします。")
-            continue
-        ws = wb[sheet_name]
-        resolved = {ref: str(data.get(key, "")) for ref, key in cell_map.items() if data.get(key)}
-        fill_cells(ws, resolved)
-    save_output(wb, output_path)
+    field_profile = to_field_profile(EXCEL_CELL_MAPPING)
+    sheet_cell_map, report = build_sheet_cell_map(wb, field_profile, data)
+    validate_resolution_report(report)
+    print(f"マッピング解決: {summarize_resolution_report(report)}")
+    fill_xlsx_safe(template_path, sheet_cell_map, output_path)
 
 
 def fill_word(template_path: str, data: dict, output_path: str):

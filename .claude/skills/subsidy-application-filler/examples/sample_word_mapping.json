@@ -1,0 +1,214 @@
+{
+  "version": "1.0",
+  "template_file": "subsidy_application_template.docx",
+  "format": "word",
+  "description": "補助金申請書Wordテンプレート用マッピング定義",
+  "placeholder_mappings": [
+    {
+      "placeholder": "{{company_name}}",
+      "data_path": "company_info.name",
+      "description": "会社名"
+    },
+    {
+      "placeholder": "{{company_name_kana}}",
+      "data_path": "company_info.name_kana",
+      "description": "会社名(カナ)"
+    },
+    {
+      "placeholder": "{{representative}}",
+      "data_path": "company_info.representative",
+      "description": "代表者氏名"
+    },
+    {
+      "placeholder": "{{representative_kana}}",
+      "data_path": "company_info.representative_kana",
+      "description": "代表者氏名(カナ)"
+    },
+    {
+      "placeholder": "{{postal_code}}",
+      "data_path": "company_info.postal_code",
+      "description": "郵便番号"
+    },
+    {
+      "placeholder": "{{address}}",
+      "data_path": "company_info.address",
+      "description": "所在地"
+    },
+    {
+      "placeholder": "{{tel}}",
+      "data_path": "company_info.tel",
+      "description": "電話番号"
+    },
+    {
+      "placeholder": "{{email}}",
+      "data_path": "company_info.email",
+      "description": "メールアドレス"
+    },
+    {
+      "placeholder": "{{employee_count}}",
+      "data_path": "company_info.employee_count",
+      "description": "従業員数"
+    },
+    {
+      "placeholder": "{{capital}}",
+      "data_path": "company_info.capital",
+      "description": "資本金"
+    },
+    {
+      "placeholder": "{{established_date}}",
+      "data_path": "company_info.established_date",
+      "description": "設立年月日"
+    },
+    {
+      "placeholder": "{{project_title}}",
+      "data_path": "project_info.title",
+      "description": "事業名"
+    },
+    {
+      "placeholder": "{{project_purpose}}",
+      "data_path": "project_info.purpose",
+      "description": "事業の目的"
+    },
+    {
+      "placeholder": "{{project_background}}",
+      "data_path": "project_info.background",
+      "description": "事業の背景"
+    },
+    {
+      "placeholder": "{{expected_outcome}}",
+      "data_path": "project_info.expected_outcome",
+      "description": "期待される成果"
+    },
+    {
+      "placeholder": "{{period_start}}",
+      "data_path": "project_info.period_start",
+      "description": "事業開始日"
+    },
+    {
+      "placeholder": "{{period_end}}",
+      "data_path": "project_info.period_end",
+      "description": "事業終了日"
+    },
+    {
+      "placeholder": "{{total_budget}}",
+      "data_path": "project_info.total_budget",
+      "description": "総事業費"
+    },
+    {
+      "placeholder": "{{subsidy_amount}}",
+      "data_path": "project_info.subsidy_amount",
+      "description": "補助金申請額"
+    }
+  ],
+  "table_mappings": [
+    {
+      "table_index": 0,
+      "table_id": "company_basic_info",
+      "is_dynamic": false,
+      "description": "会社基本情報表(静的)",
+      "cell_mappings": [
+        {
+          "placeholder": "{{company_name}}",
+          "data_path": "company_info.name"
+        },
+        {
+          "placeholder": "{{representative}}",
+          "data_path": "company_info.representative"
+        },
+        {
+          "placeholder": "{{address}}",
+          "data_path": "company_info.address"
+        },
+        {
+          "placeholder": "{{tel}}",
+          "data_path": "company_info.tel"
+        }
+      ]
+    },
+    {
+      "table_index": 1,
+      "table_id": "expense_details",
+      "is_dynamic": true,
+      "description": "経費明細表(動的)",
+      "template_row_index": 1,
+      "data_path": "expense_details",
+      "column_mappings": [
+        {
+          "col_index": 0,
+          "data_field": "category",
+          "description": "カテゴリ"
+        },
+        {
+          "col_index": 1,
+          "data_field": "item_name",
+          "description": "品目"
+        },
+        {
+          "col_index": 2,
+          "data_field": "specification",
+          "description": "仕様"
+        },
+        {
+          "col_index": 3,
+          "data_field": "quantity",
+          "description": "数量"
+        },
+        {
+          "col_index": 4,
+          "data_field": "unit",
+          "description": "単位"
+        },
+        {
+          "col_index": 5,
+          "data_field": "unit_price",
+          "description": "単価"
+        },
+        {
+          "col_index": 6,
+          "data_field": "amount",
+          "description": "金額"
+        },
+        {
+          "col_index": 7,
+          "data_field": "vendor",
+          "description": "購入先"
+        },
+        {
+          "col_index": 8,
+          "data_field": "note",
+          "description": "備考"
+        }
+      ]
+    },
+    {
+      "table_index": 2,
+      "table_id": "implementation_plan",
+      "is_dynamic": true,
+      "description": "実施計画表(動的)",
+      "template_row_index": 1,
+      "data_path": "implementation_plan",
+      "column_mappings": [
+        {
+          "col_index": 0,
+          "data_field": "phase",
+          "description": "フェーズ"
+        },
+        {
+          "col_index": 1,
+          "data_field": "period",
+          "description": "期間"
+        },
+        {
+          "col_index": 2,
+          "data_field": "content",
+          "description": "実施内容"
+        },
+        {
+          "col_index": 3,
+          "data_field": "deliverables",
+          "description": "成果物"
+        }
+      ]
+    }
+  ]
+}

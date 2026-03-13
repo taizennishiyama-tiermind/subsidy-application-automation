@@ -1,0 +1,122 @@
+[
+  {
+    "prompt": "補助金申請書のテンプレートとヒアリングメモを添付しました。申請書作成に必要な情報で不足しているものを教えてください。",
+    "attachments": [
+      "test-cases/sample-template.txt",
+      "test-cases/sample-interview.txt"
+    ],
+    "assertions": [
+      {
+        "type": "contains",
+        "value": "必須",
+        "description": "必須項目と重要項目を区別して提示しているか"
+      },
+      {
+        "type": "contains",
+        "value": "選択",
+        "description": "選択式の質問を提供しているか"
+      },
+      {
+        "type": "contains",
+        "value": "ラウンド",
+        "description": "質問を複数ラウンドに分けて提示しているか"
+      },
+      {
+        "type": "does_not_contain",
+        "value": "詳しく教えてください",
+        "description": "曖昧な質問を避けているか(具体的な質問形式を使用)"
+      }
+    ]
+  },
+  {
+    "prompt": "ものづくり補助金の申請書テンプレートを見ました。ヒアリング内容と照らし合わせて、何が足りないか教えてください。",
+    "attachments": [
+      "test-cases/sample-template.txt",
+      "test-cases/sample-interview.txt"
+    ],
+    "assertions": [
+      {
+        "type": "contains",
+        "value": "法人名",
+        "description": "テンプレートから具体的な不足項目を特定しているか"
+      },
+      {
+        "type": "contains",
+        "value": "所在地",
+        "description": "住所の詳細(郵便番号など)が不足していることを指摘しているか"
+      },
+      {
+        "type": "contains_any",
+        "value": ["メールアドレス", "連絡先"],
+        "description": "連絡先情報の不足を指摘しているか"
+      }
+    ]
+  },
+  {
+    "prompt": "助成金の申請に必要な情報を集めたいです。テンプレートとこれまでのヒアリング内容を確認して、追加で聞くべきことをリストアップしてください。できるだけ答えやすい形式でお願いします。",
+    "attachments": [
+      "test-cases/sample-template.txt",
+      "test-cases/sample-interview.txt"
+    ],
+    "assertions": [
+      {
+        "type": "contains",
+        "value": "[ ]",
+        "description": "チェックボックス形式の選択肢を提供しているか"
+      },
+      {
+        "type": "llm",
+        "value": "質問が10項目以下にまとまっているか、または複数ラウンドに分けて段階的に質問しているか",
+        "description": "一度に大量の質問をしていないか"
+      },
+      {
+        "type": "llm",
+        "value": "各質問に回答のヒントや補足説明が付いているか",
+        "description": "ユーザーが回答しやすいよう配慮されているか"
+      }
+    ]
+  },
+  {
+    "prompt": "補助金申請書を作りたいのですが、準備が足りているか確認してください。",
+    "attachments": [
+      "test-cases/sample-template.txt",
+      "test-cases/sample-interview.txt"
+    ],
+    "assertions": [
+      {
+        "type": "contains",
+        "value": "情報充足度",
+        "description": "現在の情報充足度を可視化しているか"
+      },
+      {
+        "type": "contains_any",
+        "value": ["✅", "⚠️", "❌"],
+        "description": "視覚的に分かりやすい表示を使用しているか"
+      },
+      {
+        "type": "llm",
+        "value": "完了している項目、部分的に情報がある項目、全く情報がない項目を分類して示しているか",
+        "description": "項目の状態を整理して提示しているか"
+      }
+    ]
+  },
+  {
+    "prompt": "IT導入補助金を申請したいです。このヒアリングメモだけで申請書が書けるか見てください。足りない部分があれば教えてください。",
+    "attachments": [
+      "test-cases/sample-template.txt",
+      "test-cases/sample-interview.txt"
+    ],
+    "assertions": [
+      {
+        "type": "llm",
+        "value": "不足している項目を重要度で優先順位付けしているか",
+        "description": "重要な項目から順に質問しているか"
+      },
+      {
+        "type": "llm",
+        "value": "既にヒアリングメモに含まれている情報については「確認」の形で質問しているか、または質問リストから除外しているか",
+        "description": "既存情報を活用して質問を効率化しているか"
+      }
+    ]
+  }
+]
