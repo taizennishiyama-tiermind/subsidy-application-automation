@@ -1,0 +1,237 @@
+{
+  "version": "1.0",
+  "template_file": "subsidy_application_template.xlsx",
+  "description": "補助金申請書サンプルテンプレート用マッピング定義",
+  "mappings": {
+    "申請書": {
+      "simple_cells": [
+        {
+          "cell": "B3",
+          "data_path": "company_info.name",
+          "description": "会社名",
+          "format": "text"
+        },
+        {
+          "cell": "B4",
+          "data_path": "company_info.name_kana",
+          "description": "会社名(カナ)",
+          "format": "text"
+        },
+        {
+          "cell": "B5",
+          "data_path": "company_info.representative",
+          "description": "代表者氏名",
+          "format": "text"
+        },
+        {
+          "cell": "B6",
+          "data_path": "company_info.postal_code",
+          "description": "郵便番号",
+          "format": "text"
+        },
+        {
+          "cell": "B7",
+          "data_path": "company_info.address",
+          "description": "所在地",
+          "format": "text"
+        },
+        {
+          "cell": "B8",
+          "data_path": "company_info.tel",
+          "description": "電話番号",
+          "format": "text"
+        },
+        {
+          "cell": "B9",
+          "data_path": "company_info.email",
+          "description": "メールアドレス",
+          "format": "text"
+        },
+        {
+          "cell": "B10",
+          "data_path": "company_info.employee_count",
+          "description": "従業員数",
+          "format": "number"
+        },
+        {
+          "cell": "B11",
+          "data_path": "company_info.capital",
+          "description": "資本金",
+          "format": "currency"
+        },
+        {
+          "cell": "B12",
+          "data_path": "company_info.established_date",
+          "description": "設立年月日",
+          "format": "date"
+        }
+      ],
+      "named_ranges": [
+        {
+          "name": "ProjectTitle",
+          "data_path": "project_info.title",
+          "description": "事業名",
+          "format": "text"
+        },
+        {
+          "name": "TotalBudget",
+          "data_path": "project_info.total_budget",
+          "description": "総事業費",
+          "format": "currency"
+        }
+      ],
+      "dynamic_tables": []
+    },
+    "事業計画": {
+      "simple_cells": [
+        {
+          "cell": "B3",
+          "data_path": "project_info.title",
+          "description": "事業名",
+          "format": "text"
+        },
+        {
+          "cell": "B5",
+          "data_path": "project_info.purpose",
+          "description": "事業の目的",
+          "format": "text"
+        },
+        {
+          "cell": "B10",
+          "data_path": "project_info.background",
+          "description": "事業の背景",
+          "format": "text"
+        },
+        {
+          "cell": "B15",
+          "data_path": "project_info.expected_outcome",
+          "description": "期待される成果",
+          "format": "text"
+        },
+        {
+          "cell": "D20",
+          "data_path": "project_info.period_start",
+          "description": "事業開始日",
+          "format": "date"
+        },
+        {
+          "cell": "F20",
+          "data_path": "project_info.period_end",
+          "description": "事業終了日",
+          "format": "date"
+        }
+      ],
+      "dynamic_tables": [
+        {
+          "table_id": "implementation_plan_table",
+          "header_row": 25,
+          "data_start_row": 26,
+          "data_end_row": 50,
+          "clear_existing": true,
+          "columns": [
+            {
+              "col": "B",
+              "data_field": "phase",
+              "format": "text"
+            },
+            {
+              "col": "C",
+              "data_field": "period",
+              "format": "text"
+            },
+            {
+              "col": "D",
+              "data_field": "content",
+              "format": "text"
+            },
+            {
+              "col": "E",
+              "data_field": "deliverables",
+              "format": "text"
+            }
+          ],
+          "data_path": "implementation_plan"
+        }
+      ]
+    },
+    "経費明細": {
+      "simple_cells": [
+        {
+          "cell": "B3",
+          "data_path": "project_info.total_budget",
+          "description": "総事業費",
+          "format": "currency"
+        },
+        {
+          "cell": "D3",
+          "data_path": "project_info.subsidy_amount",
+          "description": "補助金申請額",
+          "format": "currency"
+        }
+      ],
+      "dynamic_tables": [
+        {
+          "table_id": "expense_details_table",
+          "header_row": 10,
+          "data_start_row": 11,
+          "data_end_row": 100,
+          "clear_existing": true,
+          "columns": [
+            {
+              "col": "B",
+              "data_field": "category",
+              "format": "text"
+            },
+            {
+              "col": "C",
+              "data_field": "item_name",
+              "format": "text"
+            },
+            {
+              "col": "D",
+              "data_field": "specification",
+              "format": "text"
+            },
+            {
+              "col": "E",
+              "data_field": "quantity",
+              "format": "number"
+            },
+            {
+              "col": "F",
+              "data_field": "unit",
+              "format": "text"
+            },
+            {
+              "col": "G",
+              "data_field": "unit_price",
+              "format": "currency"
+            },
+            {
+              "col": "H",
+              "data_field": "amount",
+              "format": "currency"
+            },
+            {
+              "col": "I",
+              "data_field": "vendor",
+              "format": "text"
+            },
+            {
+              "col": "J",
+              "data_field": "note",
+              "format": "text"
+            }
+          ],
+          "data_path": "expense_details",
+          "auto_sum": {
+            "row_offset": 1,
+            "col": "H",
+            "formula_template": "=SUM(H{start}:H{end})",
+            "format": "currency"
+          }
+        }
+      ]
+    }
+  }
+}

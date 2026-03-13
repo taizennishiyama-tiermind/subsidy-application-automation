@@ -20,7 +20,12 @@ from pathlib import Path
 PROJECT_ROOT = Path(__file__).resolve().parents[3]
 sys.path.insert(0, str(PROJECT_ROOT / "scripts"))
 
-from utils.excel_handler import load_template, fill_cells, save_output, get_template_info
+from utils.excel_handler import fill_xlsx_safe, get_template_info, load_template
+from utils.template_mapping import (
+    build_sheet_cell_map,
+    summarize_resolution_report,
+    validate_resolution_report,
+)
 from utils.word_handler import (
     load_template as load_word_template,
     replace_placeholders,
@@ -32,24 +37,126 @@ from utils.word_handler import (
 # テンプレートのセル位置 → データキーの対応表
 # ※ 実際のテンプレートをアップロード後に更新すること
 
-EXCEL_CELL_MAPPING = {
-    # シート名: { セル参照: データキー }
-    "事業計画": {
-        # 例: "B3": "company_name",
-        # 例: "B4": "representative",
-        # 例: "B5": "established_year",
-        # 例: "B6": "employees",
-        # 例: "B7": "capital",
-        # 例: "B10": "business_overview",
-        # 例: "B15": "challenge_1",
-        # 例: "B20": "solution_overview",
+EXCEL_FIELD_MAPPING = {
+    "確認書": {
+        "input_date": {
+            "data_key": "input_date",
+            "required": True,
+            "targets": ["I8"],
+            "anchors": ["入力日", "提出日"],
+        },
+        "address": {
+            "data_key": "address",
+            "required": True,
+            "targets": ["I9"],
+            "anchors": ["住所", "所在地"],
+        },
+        "company_name": {
+            "data_key": "company_name",
+            "required": True,
+            "targets": ["I10"],
+            "anchors": ["事業者名", "事業者名称", "会社名"],
+        },
+        "representative_title": {
+            "data_key": "representative_title",
+            "required": True,
+            "targets": ["I11"],
+            "anchors": ["役職", "代表者役職"],
+        },
+        "representative_name": {
+            "data_key": "representative_name",
+            "required": True,
+            "targets": ["I12"],
+            "anchors": ["氏名", "代表者氏名"],
+        },
+        # 確認書シート下部: 対象月・従業員数・最低賃金未満人数（TEMPLATE_SKILL.md 2026-03-13追加）
+        "target_month_1_kakuninsho": {
+            "data_key": "target_month_1",
+            "required": True,
+            "targets": ["I29"],
+            "anchors": ["対象月①", "対象月"],
+        },
+        "target_month_2_kakuninsho": {
+            "data_key": "target_month_2",
+            "required": True,
+            "targets": ["K29"],
+            "anchors": ["対象月②"],
+        },
+        "target_month_3_kakuninsho": {
+            "data_key": "target_month_3",
+            "required": True,
+            "targets": ["M29"],
+            "anchors": ["対象月③"],
+        },
+        "total_employees_month_1_kakuninsho": {
+            "data_key": "total_employees_month_1",
+            "required": True,
+            "targets": ["I30"],
+            "anchors": ["全従業員数", "①全従業員"],
+        },
+        # K30/M30/K31/M31 は数式セル（対象月①〜③から自動集計）のため optional
+        "total_employees_month_2_kakuninsho": {
+            "data_key": "total_employees_month_2",
+            "required": False,
+            "targets": ["K30"],
+        },
+        "total_employees_month_3_kakuninsho": {
+            "data_key": "total_employees_month_3",
+            "required": False,
+            "targets": ["M30"],
+        },
+        "under_min_wage_count_month_1": {
+            "data_key": "under_min_wage_count_month_1",
+            "required": False,
+            "targets": ["I31"],
+            "anchors": ["最低賃金未満", "②改定後"],
+        },
+        "under_min_wage_count_month_2": {
+            "data_key": "under_min_wage_count_month_2",
+            "required": False,
+            "targets": ["K31"],
+        },
+        "under_min_wage_count_month_3": {
+            "data_key": "under_min_wage_count_month_3",
+            "required": False,
+            "targets": ["M31"],
+        },
     },
-    "数値計画": {
-        # 例: "C3": "sales_year0",
-        # 例: "D3": "sales_year1",
-        # 例: "C5": "operating_profit_year0",
-        # 例: "C7": "personnel_cost_year0",
-        # 例: "C9": "added_value_year0",
+    "対象月①": {
+        "company_name_m1": {"data_key": "company_name", "required": True, "targets": ["A4"], "anchors": ["事業者名"]},
+        "total_employees_month_1": {"data_key": "total_employees_month_1", "required": True, "targets": ["D4"]},
+        "target_month_1": {"data_key": "target_month_1", "required": True, "targets": ["F4"]},
+        # K4 は qualifying_count（数式セルの可能性あり）: optional
+        "qualifying_count_month_1": {"data_key": "qualifying_count_month_1", "required": False, "targets": ["K4"]},
+        "month_1_emp_1_id": {"data_key": "month_1_emp_1_id", "required": True, "targets": ["B10"]},
+        "month_1_emp_1_name": {"data_key": "month_1_emp_1_name", "required": True, "targets": ["C10"]},
+        "month_1_emp_1_prefecture": {"data_key": "month_1_emp_1_prefecture", "required": True, "targets": ["D10"]},
+        # E10 最低賃金額は数式または固定値セルの可能性あり: optional
+        "month_1_emp_1_min_wage": {"data_key": "month_1_emp_1_min_wage", "required": False, "targets": ["E10"]},
+        "month_1_emp_1_wage_type": {"data_key": "month_1_emp_1_wage_type", "required": True, "targets": ["G10"]},
+        "month_1_emp_1_amount": {"data_key": "month_1_emp_1_amount", "required": True, "targets": ["H10"]},
+        "month_1_emp_1_hours": {"data_key": "month_1_emp_1_hours", "required": True, "targets": ["I10"]},
+        "month_1_emp_1_hourly_wage": {"data_key": "month_1_emp_1_hourly_wage", "targets": ["J10"]},
+        "month_1_emp_2_id": {"data_key": "month_1_emp_2_id", "targets": ["B11"]},
+        "month_1_emp_2_name": {"data_key": "month_1_emp_2_name", "targets": ["C11"]},
+        "month_1_emp_2_prefecture": {"data_key": "month_1_emp_2_prefecture", "targets": ["D11"]},
+        "month_1_emp_2_min_wage": {"data_key": "month_1_emp_2_min_wage", "targets": ["E11"]},
+        "month_1_emp_2_wage_type": {"data_key": "month_1_emp_2_wage_type", "targets": ["G11"]},
+        "month_1_emp_2_amount": {"data_key": "month_1_emp_2_amount", "targets": ["H11"]},
+        "month_1_emp_2_hours": {"data_key": "month_1_emp_2_hours", "targets": ["I11"]},
+        "month_1_emp_2_hourly_wage": {"data_key": "month_1_emp_2_hourly_wage", "targets": ["J11"]},
+    },
+    "対象月②": {
+        "company_name_m2": {"data_key": "company_name", "required": True, "targets": ["A4"], "anchors": ["事業者名"]},
+        "total_employees_month_2": {"data_key": "total_employees_month_2", "required": True, "targets": ["D4"]},
+        "target_month_2": {"data_key": "target_month_2", "required": True, "targets": ["F4"]},
+        "qualifying_count_month_2": {"data_key": "qualifying_count_month_2", "required": False, "targets": ["K4"]},
+    },
+    "対象月③": {
+        "company_name_m3": {"data_key": "company_name", "required": True, "targets": ["A4"], "anchors": ["事業者名"]},
+        "total_employees_month_3": {"data_key": "total_employees_month_3", "required": True, "targets": ["D4"]},
+        "target_month_3": {"data_key": "target_month_3", "required": True, "targets": ["F4"]},
+        "qualifying_count_month_3": {"data_key": "qualifying_count_month_3", "required": False, "targets": ["K4"]},
     },
 }
 
@@ -64,6 +171,24 @@ WORD_PLACEHOLDER_MAPPING = {
 }
 
 
+def flatten_data(data: dict) -> dict:
+    """ネストしたJSONからスクリプトが参照しやすい平坦な辞書を作る"""
+    flat = {}
+
+    def _walk(value):
+        if isinstance(value, dict):
+            for k, v in value.items():
+                if k not in flat and not isinstance(v, (dict, list)):
+                    flat[k] = v
+                _walk(v)
+        elif isinstance(value, list):
+            for item in value:
+                _walk(item)
+
+    _walk(data)
+    return flat
+
+
 def load_data(data_path: str) -> dict:
     """案件データを読み込む（JSON形式）"""
     path = Path(data_path)
@@ -73,7 +198,12 @@ def load_data(data_path: str) -> dict:
 
     if path.suffix == ".json":
         with open(path, encoding="utf-8") as f:
-            return json.load(f)
+            raw = json.load(f)
+            if isinstance(raw, dict):
+                flat = flatten_data(raw)
+                flat["_raw"] = raw
+                return flat
+            return raw
 
     print(f"エラー: JSONファイルを指定してください: {data_path}", file=sys.stderr)
     sys.exit(1)
@@ -82,22 +212,10 @@ def load_data(data_path: str) -> dict:
 def fill_excel(template_path: str, data: dict, output_path: str):
     """Excelテンプレートにデータを書き込む"""
     wb = load_template(template_path)
-
-    for sheet_name, cell_map in EXCEL_CELL_MAPPING.items():
-        if sheet_name not in wb.sheetnames:
-            print(f"警告: シート '{sheet_name}' が見つかりません。スキップします。")
-            continue
-
-        ws = wb[sheet_name]
-        resolved = {}
-        for cell_ref, data_key in cell_map.items():
-            value = data.get(data_key, "")
-            if value:
-                resolved[cell_ref] = str(value)
-
-        fill_cells(ws, resolved)
-
-    save_output(wb, output_path)
+    sheet_cell_map, report = build_sheet_cell_map(wb, EXCEL_FIELD_MAPPING, data)
+    validate_resolution_report(report)
+    print(f"マッピング解決: {summarize_resolution_report(report)}")
+    fill_xlsx_safe(template_path, sheet_cell_map, output_path)
 
 
 def fill_word(template_path: str, data: dict, output_path: str):
