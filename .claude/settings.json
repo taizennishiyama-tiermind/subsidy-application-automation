@@ -1,0 +1,9 @@
+{
+  "permissions": {
+    "allow": [
+      "Read(//Users/kawaguchimasashi/.config/**)",
+      "Read(//Users/kawaguchimasashi/.config/gh/**)",
+      "Bash(gh pr:*)"
+    ]
+  }
+}
