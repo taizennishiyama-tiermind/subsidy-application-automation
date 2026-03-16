@@ -1,0 +1,84 @@
+{
+  "grant_name": "ものづくり補助金",
+  "version": "第18次（2026年度）",
+  "analyzed_date": "2026-03-16",
+  "template_file": "monozukuri_application_template.xlsx",
+  "skill_file": "TEMPLATE_SKILL.md",
+  "sheets": [
+    {
+      "name": "表紙",
+      "role": "submit",
+      "description": "企業基本情報・申請概要",
+      "input_cells": [
+        {"cell": "B3",  "label": "申請日",         "variable": "application_date",       "type": "date"},
+        {"cell": "B5",  "label": "会社名",         "variable": "company_name",           "type": "text"},
+        {"cell": "B7",  "label": "代表者名",        "variable": "representative_name",    "type": "text"},
+        {"cell": "B9",  "label": "所在地",         "variable": "address",                "type": "text"},
+        {"cell": "B11", "label": "電話番号",        "variable": "phone",                  "type": "text"},
+        {"cell": "B13", "label": "資本金（万円）",   "variable": "capital",               "type": "currency"},
+        {"cell": "B15", "label": "従業員数（名）",   "variable": "employee_count",        "type": "number"},
+        {"cell": "B17", "label": "業種",           "variable": "industry",               "type": "text"},
+        {"cell": "B19", "label": "事業計画名",      "variable": "project_title",          "type": "text"},
+        {"cell": "B21", "label": "補助事業区分",    "variable": "subsidy_type",           "type": "text"},
+        {"cell": "B23", "label": "補助希望額（万円）","variable": "subsidy_amount",        "type": "currency"},
+        {"cell": "B25", "label": "事業実施期間",    "variable": "implementation_period",  "type": "text"}
+      ]
+    },
+    {
+      "name": "事業計画書",
+      "role": "submit",
+      "description": "申請事業の詳細（メイン申請書）",
+      "input_cells": [
+        {"rows": "10-25",  "label": "1-1. 現在の事業の状況・強み・弱みや市場動向等について", "variable": "business_current_situation", "type": "text", "max_chars": 800},
+        {"rows": "28-45",  "label": "1-2. 革新的サービス・試作品・生産プロセス等の開発の内容", "variable": "innovation_content",         "type": "text", "max_chars": 1200},
+        {"rows": "48-65",  "label": "1-3. 補助事業の実施体制",                          "variable": "implementation_structure",   "type": "text", "max_chars": 600},
+        {"rows": "68-85",  "label": "1-4. 補助事業の実施スケジュール",                   "variable": "implementation_schedule",    "type": "text", "max_chars": 600},
+        {"rows": "90-110", "label": "2-1. 本事業の成果の事業化に向けて取り組む内容",       "variable": "commercialization_plan",     "type": "text", "max_chars": 800},
+        {"rows": "113-130","label": "2-2. 市場規模・成長性等について",                    "variable": "market_analysis",           "type": "text", "max_chars": 600},
+        {"rows": "133-150","label": "2-3. 現在の自社の製品・サービス等と比較した優位性",    "variable": "competitive_advantage",     "type": "text", "max_chars": 600},
+        {"cell": "E158",   "label": "付加価値額（現状）",                               "variable": "added_value_current",       "type": "currency"},
+        {"cell": "F158",   "label": "付加価値額（3年後）",                              "variable": "added_value_3years",        "type": "currency"},
+        {"cell": "E160",   "label": "1人あたり付加価値額（現状）",                       "variable": "productivity_per_employee_current",  "type": "currency"},
+        {"cell": "F160",   "label": "1人あたり付加価値額（3年後）",                      "variable": "productivity_per_employee_3years",   "type": "currency"}
+      ]
+    },
+    {
+      "name": "賃金引上げ計画",
+      "role": "submit",
+      "description": "賃上げコミットメント",
+      "input_cells": [
+        {"cell": "C5", "label": "事業場内最低賃金（現状）",   "variable": "min_wage_current",    "type": "currency"},
+        {"cell": "D5", "label": "事業場内最低賃金（引上げ後）","variable": "min_wage_after",     "type": "currency"}
+      ]
+    },
+    {
+      "name": "資金調達計画",
+      "role": "submit",
+      "description": "投資計画・資金計画",
+      "input_cells": [
+        {"cell": "C5",  "label": "設備費① 機械名",       "variable": "equipment_name_1",   "type": "text"},
+        {"cell": "D5",  "label": "設備費① 金額（税抜）",  "variable": "equipment_cost_1",   "type": "currency"},
+        {"cell": "C6",  "label": "設備費② 機械名",       "variable": "equipment_name_2",   "type": "text"},
+        {"cell": "D6",  "label": "設備費② 金額（税抜）",  "variable": "equipment_cost_2",   "type": "currency"},
+        {"cell": "C7",  "label": "設備費③ 機械名",       "variable": "equipment_name_3",   "type": "text"},
+        {"cell": "D7",  "label": "設備費③ 金額（税抜）",  "variable": "equipment_cost_3",   "type": "currency"},
+        {"cell": "C13", "label": "補助申請額（万円）",     "variable": "subsidy_amount",     "type": "currency"},
+        {"cell": "C15", "label": "自己負担額（万円）",     "variable": "self_burden",        "type": "currency"},
+        {"cell": "C17", "label": "自己資金（万円）",       "variable": "funding_self",       "type": "currency"},
+        {"cell": "C18", "label": "借入（万円）",           "variable": "funding_loan",       "type": "currency"}
+      ]
+    },
+    {
+      "name": "記入例",
+      "role": "reference_only",
+      "description": "記入方法参考例",
+      "input_cells": []
+    }
+  ],
+  "protected_cells": ["D10", "G158", "G160", "E5_賃金引上げ"],
+  "notes": [
+    "数式保護セル（設備費合計・伸び率・賃上げ額）は書き込み禁止",
+    "記入例シートは参照専用",
+    "文字数カウンターは自動計算のため入力不要"
+  ]
+}

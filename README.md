@@ -326,18 +326,16 @@ workspace/
 ```text
 grants/
 └── {補助金名}/
-    ├── overview.md
     ├── docs/
-    ├── templates/
-    └── scripts/
+    └── templates/
 ```
 
 それぞれの役割は次のとおりです。
 
-- `overview.md`: 制度概要、対象者、対象経費、審査基準の要約
-- `docs/`: 公募要領、交付規程、Q&A などの原資料
-- `templates/`: 公式の Excel / Word テンプレート
-- `scripts/`: その補助金向けの書き込みスクリプト
+- `docs/`: 公募要領、交付規程、Q&A などの原資料（PDFを配置する）
+- `templates/`: 公式の Excel / Word テンプレート（`/add-template` 実行時に `TEMPLATE_SKILL.md` と `template_registry.json` が自動生成される）
+
+テンプレートへの書き込みスクリプトは `.claude/skills/subsidy-application-filler/scripts/` に集中管理されており、`/fill` 実行時にそのスクリプト群が自動的に使われます。
 
 このフォルダには、各補助金の制度内容、公募要領、ガイドライン、テンプレート、テンプレート解析結果を蓄積していく想定です。  
 同じ補助金を次回扱うときは、まず `grants/{補助金名}/` に蓄積された情報を参照します。
@@ -498,7 +496,7 @@ subsidy-application-automation/
 この README を読んだあとに確認すると理解しやすい場所は、次の 3 つです。
 
 - `CLAUDE.md`: この環境全体の運用方針
-- `grants/{補助金名}/overview.md`: 各補助金の制度概要
+- `grants/{補助金名}/docs/README.md`: 各補助金の公式資料入手先
 - `grants/{補助金名}/templates/README.md`: その補助金で必要なテンプレートの種類
 
 ## 実案件マニュアル
