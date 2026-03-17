@@ -27,7 +27,7 @@ $ARGUMENTS = 補助金名（省略時はStep 0で確認）
    - 検出できない場合はユーザーに1問で確認する
 
 3. 既存登録の確認:
-   - `grants/{補助金名}/templates/` 配下にサブフォルダが存在し、その中に `template_registry.json` がある場合は登録済み内容を表示する:
+   - `grants/{補助金名}/templates/` 配下にサブフォルダが存在し、その中にテンプレート実体と `TEMPLATE_SKILL.md` がある場合は登録済み内容を表示する:
      ```
      📋 既存登録あり: {ファイル名}（{年度}、登録日: {日付}）
      別バージョンを追加登録しますか？ [はい / スキップして差分確認へ]
@@ -67,7 +67,7 @@ $ARGUMENTS = 補助金名（省略時はStep 0で確認）
      ```
      📂 テンプレートを格納しました
      → grants/{補助金名}/templates/{ファイル名（拡張子なし）}/{ファイル名}
-     TEMPLATE_SKILL.md・template_registry.json をこのフォルダ専用に生成します。
+     TEMPLATE_SKILL.md と必要な運用メモをこのフォルダ専用に生成します。
      解析を開始します...
      ```
 3. ファイルが見つからない場合:
@@ -385,28 +385,11 @@ TEMPLATE_SKILL.md の内容と一致するよう自動更新する。
 
 ---
 
-### Step 9: template_registry.json の更新
+### Step 9: TEMPLATE_SKILL.md・運用メモの更新
 
-`grants/{補助金名}/templates/{ファイル名（拡張子なし）}/template_registry.json` を生成・更新する。
+`grants/{補助金名}/templates/{ファイル名（拡張子なし）}/TEMPLATE_SKILL.md` と
+必要に応じた運用メモを更新する。
 他のテンプレートや補助金のフォルダには書き込まない。
-
-```json
-{
-  "grant_name": "{補助金名}",
-  "template_folder": "grants/{補助金名}/templates/{ファイル名（拡張子なし）}/",
-  "templates": [
-    {
-      "filename": "{ファイル名}",
-      "registered_at": "{今日の日付}",
-      "fiscal_year": "{ユーザー入力値}",
-      "source": "フォルダドラッグ",
-      "gap_questions_answered": {N},
-      "cell_mapping_updated": true,
-      "template_skill_generated": true
-    }
-  ]
-}
-```
 
 ---
 
@@ -445,7 +428,6 @@ TEMPLATE_SKILL.md の内容と一致するよう自動更新する。
 
 【自動生成されたファイル】
 📄 grants/{補助金名}/templates/{ファイル名（拡張子なし）}/TEMPLATE_SKILL.md
-📄 grants/{補助金名}/templates/{ファイル名（拡張子なし）}/template_registry.json
 📄 workspace/{案件名}/hearing_notes.md（追記）
 
 次のステップ:

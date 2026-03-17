@@ -142,7 +142,7 @@ $ARGUMENTS = 案件名（省略時はユーザーに確認する）
 1. `grants/{補助金名}/docs/` にPDFがあれば読み込む（公募要領・交付規定等）
 2. `grants/{補助金名}/overview.md` を読み込む
 3. `grants/{補助金名}/templates/README.md` を読み込む（テンプレートの入手先）
-4. `grants/{補助金名}/templates/template_registry.json` を確認する（登録済みテンプレートの有無）
+4. `grants/{補助金名}/templates/` を確認する（登録済みテンプレート実体の有無）
 
 #### 7-2. 申請準備ガイドを以下のフォーマットで表示する
 

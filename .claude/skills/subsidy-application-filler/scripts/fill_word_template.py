@@ -38,6 +38,23 @@ class WordTemplateFiller:
             self.extracted_data = json.load(f)
         
         self.fill_log = []
+
+    EXAMPLE_TEXT_PATTERNS = [
+        r"記入例",
+        r"入力例",
+        r"例[：:]",
+        r"サンプル",
+        r"ダミー",
+        r"ここに",
+        r"入力してください",
+        r"記載してください",
+        r"株式会社〇〇",
+        r"株式会社XX",
+        r"山田太郎",
+        r"○○",
+        r"XXX",
+        r"ＡＡＡ",
+    ]
     
     def fill(self):
         """データ埋め込みを実行"""
@@ -121,6 +138,25 @@ class WordTemplateFiller:
             paragraph.runs[0].text = full_text
         else:
             paragraph.add_run(full_text)
+
+    def _looks_like_example_text(self, value):
+        """入力欄に残った例文・ダミーテキストらしさを判定する"""
+        if not isinstance(value, str):
+            return False
+
+        text = value.strip()
+        if not text:
+            return False
+
+        return any(re.search(pattern, text, re.IGNORECASE) for pattern in self.EXAMPLE_TEXT_PATTERNS)
+
+    def _clear_example_text_in_paragraph(self, paragraph):
+        """書き込み前に、入力欄に残っている例文を削除する"""
+        if self._looks_like_example_text(paragraph.text):
+            for run in paragraph.runs:
+                run.text = ""
+            if not paragraph.runs:
+                paragraph.text = ""
     
     def _fill_tables(self):
         """表の処理"""
@@ -160,9 +196,10 @@ class WordTemplateFiller:
             for cell in row.cells:
                 for paragraph in cell.paragraphs:
                     original_text = paragraph.text
-                    
+
                     for placeholder, value in placeholder_map.items():
                         if placeholder in original_text:
+                            self._clear_example_text_in_paragraph(paragraph)
                             self._replace_in_paragraph(paragraph, {placeholder: value})
                             print(f"    {placeholder} → {value}")
     
@@ -218,6 +255,7 @@ class WordTemplateFiller:
                 # セルのテキストを置換
                 cell = new_row.cells[col_idx]
                 for paragraph in cell.paragraphs:
+                    self._clear_example_text_in_paragraph(paragraph)
                     paragraph.text = str(value)
             
             print(f"    ✓ 行追加: {item.get(column_mappings[0]['data_field'], '')}")
@@ -269,6 +307,8 @@ class WordTemplateFiller:
         for paragraph in self.doc.paragraphs:
             if re.search(r'\{\{|\{[A-Za-z]|\[', paragraph.text):
                 remaining_placeholders.append(paragraph.text[:100])
+            elif self._looks_like_example_text(paragraph.text):
+                remaining_placeholders.append(f"例文残存: {paragraph.text[:100]}")
         
         for table in self.doc.tables:
             for row in table.rows:
@@ -276,6 +316,8 @@ class WordTemplateFiller:
                     for paragraph in cell.paragraphs:
                         if re.search(r'\{\{|\{[A-Za-z]|\[', paragraph.text):
                             remaining_placeholders.append(paragraph.text[:100])
+                        elif self._looks_like_example_text(paragraph.text):
+                            remaining_placeholders.append(f"例文残存: {paragraph.text[:100]}")
         
         if remaining_placeholders:
             print("⚠️ 未置換のプレースホルダーが残っています:")

@@ -30,20 +30,9 @@ grants/{補助金名}/
 ├── docs/
 │   └── README.md                  ← 公募要領・交付規定等のPDF格納手順
 ├── templates/
-│   ├── README.md                  ← テンプレートファイルの格納手順
-│   └── template_registry.json    ← テンプレートのバージョン管理（初期は空）
+│   └── README.md                  ← テンプレートファイルの格納手順
 └── scripts/
     └── fill_template.py           ← テンプレート書き込みスクリプト
-```
-
-`template_registry.json` の初期内容:
-```json
-{
-  "grant_name": "{補助金名}",
-  "templates": [],
-  "history": [],
-  "_note": "テンプレートファイルをこのフォルダに配置後、/add-template {補助金名} を実行して登録してください"
-}
 ```
 
 ### Step 3: overview.md の作成
