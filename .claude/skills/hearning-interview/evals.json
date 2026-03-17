@@ -1,6 +1,6 @@
 [
   {
-    "prompt": "補助金申請書のテンプレートとヒアリングメモを添付しました。申請書作成に必要な情報で不足しているものを教えてください。",
+    "prompt": "補助金申請書のテンプレートを案件フォルダに配置し、ヒアリングメモも用意しました。申請書作成に必要な情報で不足しているものを教えてください。",
     "attachments": [
       "test-cases/sample-template.txt",
       "test-cases/sample-interview.txt"
