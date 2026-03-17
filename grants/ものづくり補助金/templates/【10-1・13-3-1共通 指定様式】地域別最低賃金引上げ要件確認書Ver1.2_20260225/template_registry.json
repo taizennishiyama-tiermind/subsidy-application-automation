@@ -1,0 +1,106 @@
+{
+  "grant_name": "ものづくり補助金",
+  "template_file": "【10-1・13-3-1共通 指定様式】地域別最低賃金引上げ要件確認書Ver1.2_20260225.xlsx",
+  "template_type": "addpoint_document",
+  "submission_condition": "「地域別最低賃金引き上げに係る加点」または「最低賃金引上げ特例（補助率引上げ）」を希望する場合のみ提出",
+  "version": "Ver1.2（第23次公募対応）",
+  "analyzed_date": "2026-03-17",
+  "sheets": [
+    {
+      "name": "改訂履歴",
+      "role": "reference_only",
+      "input_cells": []
+    },
+    {
+      "name": "最低賃金",
+      "role": "reference_only",
+      "note": "都道府県別最低賃金マスタ。愛知県R6年度: 1140円",
+      "input_cells": []
+    },
+    {
+      "name": "対象月",
+      "role": "reference_only",
+      "input_cells": []
+    },
+    {
+      "name": "確認書",
+      "role": "submit",
+      "input_cells": [
+        {"cell": "L8",  "label": "入力日",       "variable": "application_date",      "type": "date",   "anchor": "K8=入力日"},
+        {"cell": "L9",  "label": "住所",         "variable": "address",               "type": "text",   "anchor": "K9=住所"},
+        {"cell": "L10", "label": "事業者名",      "variable": "company_name",          "type": "text",   "anchor": "K10=事業者名"},
+        {"cell": "L11", "label": "代表者役職",    "variable": "representative_title",  "type": "text",   "anchor": "K11=代表者役職"},
+        {"cell": "L12", "label": "代表者氏名",    "variable": "representative_name",   "type": "text",   "anchor": "K12=代表者氏名"},
+        {"cell": "I28", "label": "対象月①",      "variable": "target_month_1",        "type": "date",   "merged": "I28:J28"},
+        {"cell": "K28", "label": "対象月②",      "variable": "target_month_2",        "type": "date",   "merged": "K28:L28"},
+        {"cell": "M28", "label": "対象月③",      "variable": "target_month_3",        "type": "date",   "merged": "M28:N28"},
+        {"cell": "C36", "label": "対象賃金名称",  "variable": "wage_component_names",  "type": "text",   "anchor": "C35=賃金台帳等で..."}
+      ],
+      "auto_calc_cells": ["I30", "K30", "M30", "I31", "K31", "M31", "I32", "K32", "M32", "I33", "K33", "M33"],
+      "note": "全従業員数・最低賃金未満数・比率・判定は対象月①②③シートから自動計算される"
+    },
+    {
+      "name": "対象月①",
+      "role": "submit",
+      "input_cells": [
+        {"cell": "A4",  "label": "事業者名",   "variable": "company_name",          "type": "text",   "merged": "A4:C4"},
+        {"cell": "D4",  "label": "全従業員数", "variable": "total_employees_m1",    "type": "number", "anchor": "D3=従業員数"},
+        {"cell": "F4",  "label": "対象年月",   "variable": "target_month_1",        "type": "date",   "anchor": "F3=対象年月"},
+        {"rows": "10-3009", "label": "従業員別賃金データ", "variable": "employee_rows_m1", "type": "rows",
+         "columns": {
+           "A": "NO（自動）",
+           "B": "従業員番号等",
+           "C": "対象従業員名",
+           "D": "勤務地（都道府県）",
+           "E": "最低賃金額R6年度改定分",
+           "F": "最低賃金額R7年度改定分",
+           "G": "給与制度（1:月給/2:日給/3:時間給）",
+           "H": "金額（月給/日給/時間給）",
+           "I": "所定時間（月当たり/日当たり/ー）",
+           "J": "1時間当たり賃金額（自動計算）",
+           "K": "判定（自動）"
+         }}
+      ],
+      "auto_calc_columns": ["J", "K"],
+      "auto_calc_cells": ["K4"]
+    },
+    {
+      "name": "対象月②",
+      "role": "submit",
+      "structure": "対象月①と同一構造",
+      "input_cells": [
+        {"cell": "A4",  "label": "事業者名",   "variable": "company_name",          "type": "text",   "merged": "A4:C4"},
+        {"cell": "D4",  "label": "全従業員数", "variable": "total_employees_m2",    "type": "number"},
+        {"cell": "F4",  "label": "対象年月",   "variable": "target_month_2",        "type": "date"},
+        {"rows": "10-3009", "label": "従業員別賃金データ", "variable": "employee_rows_m2", "type": "rows"}
+      ]
+    },
+    {
+      "name": "対象月③",
+      "role": "submit",
+      "structure": "対象月①と同一構造",
+      "input_cells": [
+        {"cell": "A4",  "label": "事業者名",   "variable": "company_name",          "type": "text",   "merged": "A4:C4"},
+        {"cell": "D4",  "label": "全従業員数", "variable": "total_employees_m3",    "type": "number"},
+        {"cell": "F4",  "label": "対象年月",   "variable": "target_month_3",        "type": "date"},
+        {"rows": "10-3009", "label": "従業員別賃金データ", "variable": "employee_rows_m3", "type": "rows"}
+      ]
+    },
+    {
+      "name": "記入例（確認書）",
+      "role": "reference_only",
+      "input_cells": []
+    },
+    {
+      "name": "記入例（対象月）",
+      "role": "reference_only",
+      "input_cells": []
+    }
+  ],
+  "protected_cells": ["I30","K30","M30","I31","K31","M31","I32","K32","M32","I33","K33","M33","J列全行","K列全行","K4"],
+  "aichi_min_wage": {
+    "R6": 1140,
+    "note": "愛知県R6年度（2025年10月〜）地域別最低賃金"
+  },
+  "requirement": "2024年10月〜2025年9月の期間で、最低賃金以上〜改定後未満の従業員が全体の30%以上の月が3か月以上あること"
+}

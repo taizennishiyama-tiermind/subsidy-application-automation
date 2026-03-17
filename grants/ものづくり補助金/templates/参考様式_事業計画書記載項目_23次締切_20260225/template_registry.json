@@ -1,0 +1,189 @@
+{
+  "grant_name": "ものづくり補助金",
+  "template_file": "参考様式_事業計画書記載項目_23次締切_20260225.docx",
+  "template_type": "reference_only",
+  "note": "参考様式のため申請書そのものではない。実際の申請は電子申請システム（jGrants）で行う。/fill 時は jGrants 入力用の完成版 .md を生成する。",
+  "version": "第23次（2026年5月8日締切）",
+  "analyzed_date": "2026-03-17",
+  "submission_frame": "製品・サービス高付加価値化枠",
+  "sections": [
+    {
+      "id": "0",
+      "title": "誓約・同意事項",
+      "type": "agree_only",
+      "variables": []
+    },
+    {
+      "id": "1",
+      "title": "申請者の概要等",
+      "type": "form",
+      "variables": [
+        {"key": "company_name",          "label": "法人名・屋号",             "type": "text",     "required": true},
+        {"key": "representative_name",   "label": "代表者氏名",               "type": "text",     "required": true},
+        {"key": "representative_title",  "label": "代表者役職",               "type": "text",     "required": true},
+        {"key": "address",               "label": "住所",                     "type": "text",     "required": true},
+        {"key": "phone",                 "label": "電話番号",                  "type": "text",     "required": true},
+        {"key": "capital",               "label": "資本金（円）",              "type": "currency", "required": true},
+        {"key": "employee_count",        "label": "常時使用する従業員数（名）", "type": "number",   "required": true},
+        {"key": "industry",              "label": "業種",                     "type": "text",     "required": true},
+        {"key": "financial_year1_sales", "label": "売上高（前期）",            "type": "currency", "required": true},
+        {"key": "financial_year2_sales", "label": "売上高（前々期）",          "type": "currency", "required": true},
+        {"key": "financial_year1_profit","label": "経常利益（前期）",          "type": "currency", "required": true},
+        {"key": "financial_year2_profit","label": "経常利益（前々期）",        "type": "currency", "required": true}
+      ]
+    },
+    {
+      "id": "2",
+      "title": "常時使用する従業員の申告",
+      "type": "form",
+      "variables": [
+        {"key": "regular_employee_count", "label": "常時使用する従業員数", "type": "number", "required": true}
+      ]
+    },
+    {
+      "id": "3",
+      "title": "補助金等の実績説明",
+      "type": "table",
+      "variables": [
+        {"key": "past_subsidies", "label": "過去に受けた補助金・委託費", "type": "text", "required": false, "note": "なし の場合は「なし」と記入"}
+      ]
+    },
+    {
+      "id": "4-1",
+      "title": "事業枠",
+      "type": "select",
+      "variables": [
+        {"key": "subsidy_frame",        "label": "事業枠",                    "type": "select",   "required": true,
+         "options": ["製品・サービス高付加価値化枠", "グローバル枠"],
+         "recommended": "製品・サービス高付加価値化枠"},
+        {"key": "special_wage_upper",   "label": "大幅賃上げ特例の希望",       "type": "boolean",  "required": false},
+        {"key": "special_min_wage",     "label": "最低賃金引上げ特例の希望",   "type": "boolean",  "required": false}
+      ]
+    },
+    {
+      "id": "4-2",
+      "title": "事業計画名",
+      "type": "text",
+      "variables": [
+        {"key": "project_title", "label": "事業計画名", "type": "text", "max_chars": 30, "required": true}
+      ]
+    },
+    {
+      "id": "4-3",
+      "title": "事業計画の概要",
+      "type": "text",
+      "variables": [
+        {"key": "project_summary", "label": "事業計画の概要", "type": "text", "max_chars": 100, "required": true}
+      ]
+    },
+    {
+      "id": "4-4",
+      "title": "事業分野",
+      "type": "select",
+      "variables": [
+        {"key": "project_field", "label": "事業分野", "type": "select", "required": true,
+         "options": ["新商品（試作品）開発", "新役務（サービス）の開発", "新たな生産方式の導入", "新たな提供方式の導入"],
+         "recommended": "新たな生産方式の導入"}
+      ]
+    },
+    {
+      "id": "4-5-1",
+      "title": "今回の事業実施の背景",
+      "type": "textarea",
+      "variables": [
+        {"key": "background", "label": "今回の事業実施の背景", "type": "textarea", "max_chars": 1000, "required": true}
+      ]
+    },
+    {
+      "id": "4-5-2",
+      "title": "会社全体の事業計画",
+      "type": "textarea",
+      "variables": [
+        {"key": "company_plan", "label": "会社全体の事業計画", "type": "textarea", "max_chars": 1000, "required": true}
+      ]
+    },
+    {
+      "id": "4-5-3-1",
+      "title": "今回の事業の具体的アクション",
+      "type": "textarea",
+      "variables": [
+        {"key": "action_plan", "label": "今回の事業の具体的アクション", "type": "textarea", "max_chars": 1000, "required": true}
+      ]
+    },
+    {
+      "id": "4-5-3-2",
+      "title": "今回の事業の成果の検証方法",
+      "type": "textarea",
+      "variables": [
+        {"key": "verification_method", "label": "成果の検証方法", "type": "textarea", "max_chars": 1000, "required": true}
+      ]
+    },
+    {
+      "id": "4-5-4",
+      "title": "今回の事業に要する経費",
+      "type": "textarea",
+      "variables": [
+        {"key": "expense_detail", "label": "今回の事業に要する経費", "type": "textarea", "max_chars": 1000, "required": true}
+      ]
+    },
+    {
+      "id": "4-5-5",
+      "title": "今回の事業の革新性・差別化",
+      "type": "textarea",
+      "variables": [
+        {"key": "innovation", "label": "革新性・差別化", "type": "textarea", "max_chars": 1000, "required": true}
+      ]
+    },
+    {
+      "id": "4-5-6",
+      "title": "市場への効果・付加価値額の増加",
+      "type": "textarea",
+      "variables": [
+        {"key": "market_effect", "label": "市場への効果・付加価値額の増加", "type": "textarea", "max_chars": 1000, "required": true}
+      ]
+    },
+    {
+      "id": "4-5-7",
+      "title": "賃金引上げ（自身に及ぼす効果）",
+      "type": "textarea",
+      "variables": [
+        {"key": "wage_increase", "label": "賃金引上げの効果", "type": "textarea", "max_chars": 500, "required": true}
+      ]
+    },
+    {
+      "id": "4-5-8",
+      "title": "地域の資源・地域経済への貢献",
+      "type": "textarea",
+      "variables": [
+        {"key": "regional_contribution", "label": "地域経済への貢献", "type": "textarea", "max_chars": 1000, "required": true}
+      ]
+    },
+    {
+      "id": "5",
+      "title": "経費明細表",
+      "type": "table",
+      "variables": [
+        {"key": "equipment_name_1",    "label": "機械名①",           "type": "text",     "required": true},
+        {"key": "equipment_cost_1",    "label": "設備費①（税抜）",   "type": "currency", "required": true},
+        {"key": "equipment_name_2",    "label": "機械名②",           "type": "text",     "required": false},
+        {"key": "equipment_cost_2",    "label": "設備費②（税抜）",   "type": "currency", "required": false},
+        {"key": "total_project_cost",  "label": "事業費合計（A）",    "type": "currency", "required": true},
+        {"key": "total_eligible_cost", "label": "補助対象経費（B）",  "type": "currency", "required": true},
+        {"key": "subsidy_request",     "label": "補助申請額（C）",    "type": "currency", "required": true}
+      ]
+    },
+    {
+      "id": "6",
+      "title": "資金調達内訳",
+      "type": "form",
+      "variables": [
+        {"key": "funding_subsidy",    "label": "補助金",          "type": "currency", "required": true},
+        {"key": "funding_self",       "label": "自己資金",         "type": "currency", "required": true},
+        {"key": "funding_loan",       "label": "借入金",           "type": "currency", "required": false},
+        {"key": "funding_loan_bank",  "label": "借入金融機関名",   "type": "text",     "required": false}
+      ]
+    }
+  ],
+  "protected_fields": [],
+  "fill_instruction": "jGrants電子申請システムへの入力用 .md を workspace/{案件名}/output/ に生成する。このWordファイル自体への書き込みは不要。"
+}
