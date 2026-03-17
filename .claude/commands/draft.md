@@ -10,7 +10,7 @@ $ARGUMENTS = 案件名（省略時はユーザーに確認する）
 
 - `workspace/{案件名}/hearing_notes.md` が完成していること
 - `workspace/{案件名}/strategy.md` に補助金が選定済みであること
-- **`grants/{補助金名}/templates/template_registry.json` が登録済みであること（必須）**
+- **`grants/{補助金名}/templates/` にテンプレート実体があり、再解析可能であること（必須）**
 
 ## 手順
 
@@ -18,7 +18,7 @@ $ARGUMENTS = 案件名（省略時はユーザーに確認する）
 
 **申請書作成前に、公式テンプレートの登録を必ず確認する。**
 
-1. `grants/{補助金名}/templates/template_registry.json` を確認する
+1. `grants/{補助金名}/templates/` 配下に解析対象のテンプレート実体があるか確認する
 
 **テンプレートが登録済みの場合:**
 

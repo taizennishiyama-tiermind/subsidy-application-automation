@@ -9,6 +9,7 @@ Template Filler
 import openpyxl
 from openpyxl.utils import get_column_letter
 import json
+import re
 import sys
 from pathlib import Path
 from datetime import datetime
@@ -36,6 +37,23 @@ class TemplateFiller:
             self.extracted_data = json.load(f)
         
         self.fill_log = []
+
+    EXAMPLE_TEXT_PATTERNS = [
+        r"記入例",
+        r"入力例",
+        r"例[：:]",
+        r"サンプル",
+        r"ダミー",
+        r"ここに",
+        r"入力してください",
+        r"記載してください",
+        r"株式会社〇〇",
+        r"株式会社XX",
+        r"山田太郎",
+        r"○○",
+        r"XXX",
+        r"ＡＡＡ",
+    ]
     
     def fill(self):
         """データ埋め込みを実行"""
@@ -109,7 +127,9 @@ class TemplateFiller:
             
             # セル結合チェック
             target_cell = self._get_write_target(ws, cell_coord)
-            
+
+            self._clear_example_text_in_cell(ws, target_cell)
+
             # 値を設定
             ws[target_cell] = value
             
@@ -184,7 +204,9 @@ class TemplateFiller:
             
             # セル結合チェック
             target_cell = self._get_write_target(ws, coord)
-            
+
+            self._clear_example_text_in_cell(ws, target_cell)
+
             ws[target_cell] = value
             
             # フォーマット適用
@@ -238,7 +260,9 @@ class TemplateFiller:
                     
                     cell_coord = f"{col_letter}{current_row}"
                     target_cell = self._get_write_target(ws, cell_coord)
-                    
+
+                    self._clear_example_text_in_cell(ws, target_cell)
+
                     ws[target_cell] = value
                     
                     # フォーマット適用
@@ -260,6 +284,24 @@ class TemplateFiller:
             for col_config in columns:
                 col_letter = col_config["col"]
                 ws[f"{col_letter}{row}"] = None
+
+    def _looks_like_example_text(self, value):
+        """入力欄に残った例文・ダミーテキストらしさを判定する"""
+        if not isinstance(value, str):
+            return False
+
+        text = value.strip()
+        if not text:
+            return False
+
+        return any(re.search(pattern, text, re.IGNORECASE) for pattern in self.EXAMPLE_TEXT_PATTERNS)
+
+    def _clear_example_text_in_cell(self, ws, cell_coord):
+        """書き込み前に、入力欄に残っている例文を削除する"""
+        cell = ws[cell_coord]
+        if self._looks_like_example_text(cell.value):
+            print(f"    🧹 {cell_coord} の例文を削除")
+            cell.value = None
     
     def _add_sum_row(self, ws, table_config, data_count):
         """合計行を追加"""
@@ -317,6 +359,8 @@ class TemplateFiller:
                 
                 if ws[cell_coord].value is None:
                     issues.append(f"⚠️ {cell} が空です")
+                elif self._looks_like_example_text(ws[cell_coord].value):
+                    issues.append(f"⚠️ {cell} に例文が残っています")
         
         if issues:
             print("検証で問題が見つかりました:")
